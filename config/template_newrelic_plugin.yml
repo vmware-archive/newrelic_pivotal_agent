@@ -19,3 +19,4 @@ agents:
   # this is where configuration for agents belongs
   example:
     hertz: 1000
+    
