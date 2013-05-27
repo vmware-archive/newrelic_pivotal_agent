@@ -64,7 +64,7 @@ module HttpdModBmxExtension
 
     private
 
-    def get_stats(staturl, statfile)
+    def get_stats(staturl)
       lines = Array.new
       begin
         if "#{self.testrun}" == "true"
@@ -125,8 +125,11 @@ module HttpdModBmxExtension
   
   NewRelic::Plugin::Setup.install_agent :httpd_mod_bmx, self
 
-  # Launch the agent; this never returns.
+  # Check if we're included as a module and if not we launch the agent, otherwise the 
+  # main pivotal agent calls this with all the extensions installed
   #
-  NewRelic::Plugin::Run.setup_and_run
+    if __FILE__==$0
+      NewRelic::Plugin::Run.setup_and_run
+    end
 
 end
