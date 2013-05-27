@@ -37,7 +37,7 @@ module HttpdModBmxExtension
     def setup_metrics
       if !self.hostport then self.hostport = 80 end
 
-      @apache_stat_url = URI.parse("http://#{self.hostname}:#{self.hostport}/bmx?query=mod_bmx_vhost:Type=forever,Host=#{hostname},Port=#{hostport}")
+      @mod_bmx_stat_url = URI.parse("http://#{self.hostname}:#{self.hostport}/bmx?query=mod_bmx_vhost:Type=forever,Host=#{hostname},Port=#{hostport}")
 
       @metric_types = Hash.new("ms")
       @metric_types["Total Accesses"] = "accesses"
@@ -54,13 +54,10 @@ module HttpdModBmxExtension
       @metric_types["ConnsAsyncKeepAlive"] = "connections"
       @metric_types["ConnsAsyncClosing"] = "connections"
 
-      @ssl_metrics=["CacheType", "SharedMemory", "CurrentEntries", "Subcaches", "IndexesPerSubCache", "TimeLeftOnOldestEntriesObjects", "IndexUsage", "CacheUsage", "TotalEntriesStored", "TotalEntriesReplaced", "TotalEntriesExpired", "TotalEntriesScrolledOut", "TotalRetrievesHit", "TotalRetrievesMiss", "TotalRemovesHit", "TotalRemovesMiss"]
-      @req_metrics=["ChildServerNumber", "PID", "AccessesThisConnection", "AccessesThisChild", "AccessesThisSlot", "WorkerModeOfOperation", "CPUUsage", "SecSinceLastRequest", "LastRequestProcessTime", "KilobytesTransferredThisConnection", "MegabytesTransferredThisChild", "MegabytesTransferredThisSlot", "ClientIP", "VHost", "RequestContents"]
-      @ws_metrics=["PID", "ConnectionsTotal", "ConnectionsAccepting", "ThreadsBusy", "ThreadsIdle", "AsyncConnsWriting", "AsyncConnsKeepAlive", "AsyncConnsClosing"]
     end
 
     def poll_cycle
-      apache_httpd_stats()
+      mod_bmx_stats()
       # Only do testruns once, then quit
       if "#{self.testrun}" == "true" then exit end
     end
@@ -86,8 +83,8 @@ module HttpdModBmxExtension
       return lines
     end
 
-    def apache_httpd_stats
-      lines = get_stats @apache_stat_url, @apache_stat_file
+    def mod_bmx_stats
+      lines = get_stats @mod_bmx_stat_url
       if lines.empty? then return end
 
       stats = Hash.new
