@@ -1,0 +1,31 @@
+#! /usr/bin/env ruby
+# This is a wrapper around all Pivotal Authored New Relic Extensions
+#
+# INSERT LICENSE HERE
+
+require "rubygems"
+require "daemons"
+require "bundler/setup"
+
+#Load each module. There can only be one config/newrelic_plugin.xml 
+#These are slightly modified to not call setup_and_run if included in another file
+#without that modification this agent will break
+
+require "./extensions/pivotal_rabbitmq_extension/pivotal_rabbitmq_extension"
+
+require "newrelic_plugin"
+
+module PivotalAgent
+  puts "Becoming a daemon"
+
+  options = {
+    :backtrace  => true,
+    :ontop      => false,   # Change to true to stay in foreground for debugging
+    :log_output => true,
+    :app_name => "pivotal_agent"
+  }
+  NewRelic::Plugin::Config.config_file=Dir.pwd + "/config/newrelic_plugin.yml"
+  Daemons.daemonize(options)
+  NewRelic::Plugin::Run.setup_and_run
+
+end
