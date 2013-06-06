@@ -22,9 +22,7 @@ This procedure installs the following extensions:
 3. In the `config` directory, make a copy of the `template_newrelic_plugin.yml` file and name it `newrelic_plugin.yml`
 
 4. Edit `config/newrelic_plugin.yml` and make the following changes:
-
 * Replace the string "YOUR_LICENSE_KEY_HERE" with your [New Relic license key](https://newrelic.com/docs/subscriptions/license-key).   
-
 * Set the `rabbitmq:management_api_url` property to your RabbitMQ management URL.  The default value is `http://guest:guest@localhost:55672`, which assumes that RabbitMQ is running on the same computer on which you are installing the Pivotal Extensions for New Relic, you are using the default port (55672), and you connect using the default `guest` RabbitMQ user.  If your RabbitMQ management URL is different, update the property accordingly.
 
 5. From the top-level directory, run the following commands: 
