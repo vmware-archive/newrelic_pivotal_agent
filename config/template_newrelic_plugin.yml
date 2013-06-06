@@ -17,5 +17,7 @@ newrelic:
 #
 agents:
   # this is where configuration for agents belongs
-  example:
-    hertz: 1000
+  rabbitmq:
+    # Defailt is http://guest:guest@localhost:55672
+    # Must enable rabbit management plugin
+    management_api_url: http://guest:guest@localhost:55672
