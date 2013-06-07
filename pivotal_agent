@@ -33,6 +33,7 @@ require "bundler/setup"
 #without that modification this agent will break
 
 require_relative "extensions/pivotal_rabbitmq_extension/pivotal_rabbitmq_extension"
+require_relative "extensions/pivotal_httpd_mod_bmx_extension/pivotal_httpd_mod_bmx_extension.rb"
 
 require "newrelic_plugin"
 

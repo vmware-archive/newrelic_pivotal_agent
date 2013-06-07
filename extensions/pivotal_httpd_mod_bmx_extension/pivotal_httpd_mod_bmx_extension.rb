@@ -113,13 +113,13 @@ module HttpdModBmxExtension
       statshash.each_key { |skey|
         statstree = "HTTPD"
         case 
-        when @metric_types[skey] == "workers"
-          statstree = "#{statstree}/Workers/#{skey}"
-        when @metric_types[skey] == "connections"
-          statstree = "#{statstree}/Connections/#{skey}"
         when @metric_types[skey] == "%"
           statshash[skey] = 100 * statshash[skey].to_f
           statstree = "#{statstree}/#{skey}"
+        when skey == "StartDate"
+          next 
+        when skey == "StartTime" 
+          next
         else
           statstree = "#{statstree}/#{skey}"
         end
