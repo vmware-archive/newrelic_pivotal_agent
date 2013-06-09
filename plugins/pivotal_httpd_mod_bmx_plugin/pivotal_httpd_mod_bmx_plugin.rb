@@ -4,13 +4,13 @@ require "bundler/setup"
 require "newrelic_plugin"
 require "net/http"
 
-# This is based on the New Relic HTTPD mod_status extension
+# This is based on the New Relic HTTPD mod_status plugin
 
 #
 #
 # The entire agent should be enclosed in a "ApacheHTTPDAgent" module
 #
-module HttpdModBmxExtension
+module HttpdModBmxPlugin
   #
   # Agent, Metric and PollCycle classes
   #
@@ -21,7 +21,7 @@ module HttpdModBmxExtension
   class Agent < NewRelic::Plugin::Agent::Base
 
     agent_config_options :hostname, :username, :password, :hostport, :agent_name, :debug, :testrun
-    agent_guid "com.gopivotal.newrelic.extensions.httpd_mod_bmx"
+    agent_guid "com.gopivotal.newrelic.plugins.httpd_mod_bmx"
     agent_version "0.0.1"
     #
     # Each agent class must also include agent_human_labels. agent_human_labels
@@ -139,7 +139,7 @@ module HttpdModBmxExtension
   NewRelic::Plugin::Setup.install_agent :httpd_mod_bmx, self
 
   # Check if we're included as a module and if not we launch the agent, otherwise the 
-  # main pivotal agent calls this with all the extensions installed
+  # main pivotal agent calls this with all the plugins installed
   #
     if __FILE__==$0
       NewRelic::Plugin::Run.setup_and_run

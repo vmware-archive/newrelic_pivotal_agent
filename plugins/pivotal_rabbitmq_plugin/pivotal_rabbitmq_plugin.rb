@@ -7,9 +7,9 @@ require 'rabbitmq_manager'
 require 'uri'
 
 module NewRelic
-  module RabbitMQExtension
+  module RabbitMQPlugin
     class Agent < NewRelic::Plugin::Agent::Base
-      agent_guid 'com.pivotal.newrelic.extension.rabbitmq'
+      agent_guid 'com.pivotal.newrelic.plugin.rabbitmq'
       agent_version '0.0.1'
       agent_config_options :management_api_url
       agent_human_labels('RabbitMQ') do
