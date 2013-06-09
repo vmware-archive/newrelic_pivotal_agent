@@ -10,7 +10,7 @@ module NewRelic
   module RabbitMQPlugin
     class Agent < NewRelic::Plugin::Agent::Base
       agent_guid 'com.pivotal.newrelic.plugin.rabbitmq'
-      agent_version '0.0.1'
+      agent_version '0.0.2'
       agent_config_options :management_api_url
       agent_human_labels('RabbitMQ') do
         uri = URI.parse(management_api_url)
