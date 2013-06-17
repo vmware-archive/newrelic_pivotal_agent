@@ -1,6 +1,6 @@
 # Pivotal Plugins for New Relic
 
-This README describes how to install and configure the Pivotal Plugins for New Relic.  For convenience, you can install all plugins at once using the procedure below.  You can also install each plugin separately from its corresponding sub-directory under the `plugins` directory; see the README in that directory for more information.
+This README describes how to install and configure the Pivotal Plugins for New Relic.  For convenience, you can install all plugins at once using the procedure below.  
 
 This procedure installs the following plugins:
 
@@ -10,8 +10,9 @@ This procedure installs the following plugins:
 
 * Be sure that Ruby (version 1.8.7 or later) is installed on the computer on which you will install the Pivotal Plugins for New Relic.  
 * Install the `bundle` Ruby gem.
-* Ensure that the computer on which you are installing the Pivotal plugins has network access to the computer on which RabbitMQ is installed, or that both are installed on the same computer.
-* Enable the RabbitMQ management plugins by executing the `rabbitmq-plugins enable rabbitmq_management` command.  See [Management Plugins](http://www.rabbitmq.com/management.html).
+* Ensure that the computer on which you are installing the Pivotal plugins has network access to the computer on which the desired product to be monitored is installed, or that both are installed on the same computer.
+* For RabbitMQ Monitoring: Enable the RabbitMQ management plugins by executing the `rabbitmq-plugins enable rabbitmq_management` command.  See [Management Plugins](http://www.rabbitmq.com/management.html).
+* For VFWS Monitoring: mod_bmx is enabled by default and allows access from localhost. If monitoring remotely you will need to enable access. The default URL for BMX is http://localhost/bmx.
 
 ## Installation Procedure
 
@@ -35,7 +36,7 @@ This procedure installs the following plugins:
 
 ## Reporting Issues
 
-Please use Github's issue tracker. [https://github.com/gopivotal/newrelic_pivotal_agent/issues](https://github.com/gopivotal/newrelic_pivotal_agent/issues)
+Please use the Github [https://github.com/gopivotal/newrelic_pivotal_agent/issues](issue tracker)
 
 ## Contributing
 
