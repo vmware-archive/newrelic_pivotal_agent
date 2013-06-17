@@ -16,8 +16,25 @@ newrelic:
 # Agent Configuration:
 #
 agents:
-  # this is where configuration for agents belongs
+# Configuration for RabbitMQ
   rabbitmq:
     # Defailt is http://guest:guest@localhost:55672
     # Must enable rabbit management plugin
     management_api_url: http://guest:guest@localhost:55672
+# Configuration for vFabric Web Server/mod_bmx
+  httpd_mod_bmx:
+      -
+        hostname: localhost
+        hostport: 80
+        # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
+        debug: false
+        # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
+        testrun: false
+      -
+        hostname: www
+        hostport: 80
+        # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
+        debug: false
+        # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
+        testrun: false
+
