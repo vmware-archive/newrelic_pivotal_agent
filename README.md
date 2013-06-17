@@ -33,3 +33,11 @@ This procedure installs the following plugins:
         $ ./pivotal_agent
 7. After a brief period, the Pivotal Plugins will appear in your New Relic Dashboard under the Plugins tab on the left. 
 
+## Reporting Issues
+
+Please use Github's issue tracker. [https://github.com/gopivotal/newrelic_pivotal_agent/issues](https://github.com/gopivotal/newrelic_pivotal_agent/issues)
+
+## Contributing
+
+We welcome contributions. Please fork the repository and issue a pull request for changes
+
