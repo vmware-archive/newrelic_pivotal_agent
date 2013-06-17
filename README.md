@@ -36,7 +36,7 @@ This procedure installs the following plugins:
 
 ## Reporting Issues
 
-Please use the Github [https://github.com/gopivotal/newrelic_pivotal_agent/issues](issue tracker)
+Please use the Github [issue tracker](https://github.com/gopivotal/newrelic_pivotal_agent/issues)
 
 ## Contributing
 
