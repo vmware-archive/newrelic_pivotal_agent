@@ -32,8 +32,8 @@ require "bundler/setup"
 #These are slightly modified to not call setup_and_run if included in another file
 #without that modification this agent will break
 
-require_relative "plugins/pivotal_rabbitmq_plugin/pivotal_rabbitmq_plugin"
-require_relative "plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plugin.rb"
+require "./plugins/pivotal_rabbitmq_plugin/pivotal_rabbitmq_plugin.rb"
+require "./plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plugin.rb"
 
 require "newrelic_plugin"
 
