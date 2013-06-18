@@ -78,13 +78,13 @@ module HttpdModBmxPlugin
       @metric_types["OutBytes403"] = "bytes"
       @metric_types["OutBytes404"] = "bytes"
       @metric_types["OutBytes500"] = "bytes"
-      @metric_types["OutResponses200"] = "requests"
-      @metric_types["OutResponses301"] = "requests"
-      @metric_types["OutResponses302"] = "requests"
-      @metric_types["OutResponses401"] = "requests"
-      @metric_types["OutResponses403"] = "requests"
-      @metric_types["OutResponses404"] = "requests"
-      @metric_types["OutResponses500"] = "requests"
+      @metric_types["OutResponses200"] = "responses"
+      @metric_types["OutResponses301"] = "responses"
+      @metric_types["OutResponses302"] = "responses"
+      @metric_types["OutResponses401"] = "responses"
+      @metric_types["OutResponses403"] = "responses"
+      @metric_types["OutResponses404"] = "responses"
+      @metric_types["OutResponses500"] = "responses"
       @metric_types["InLowBytes"] = "bytes"
       @metric_types["OutLowBytes"] = "bytes"
       @metric_types["InRequests"] = "requests"
@@ -168,8 +168,8 @@ module HttpdModBmxPlugin
   # Check if we're included as a module and if not we launch the agent, otherwise the 
   # main pivotal agent calls this with all the plugins installed
   #
-    if __FILE__==$0
-      NewRelic::Plugin::Run.setup_and_run
-    end
+  if __FILE__==$0
+    NewRelic::Plugin::Run.setup_and_run
+  end
 
 end
