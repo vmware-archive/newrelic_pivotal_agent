@@ -93,9 +93,13 @@ module HttpdModBmxPlugin
     end
 
     def poll_cycle
-      mod_bmx_stats()
-      # Only do testruns once, then quit
-      if "#{self.testrun}" == "true" then exit end
+      begin
+        mod_bmx_stats()
+        # Only do testruns once, then quit
+        if "#{self.testrun}" == "true" then exit end
+      rescue
+          puts "Exception while processing metrics. Check configuration."
+      end
     end
 
     private
