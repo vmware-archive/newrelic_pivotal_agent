@@ -2,7 +2,7 @@
 
 This README describes how to install and configure the Pivotal Plugins for New Relic.  For convenenience, the procedure installs all plugins at once. 
 
-This procedure installs the following plugins that gather metrics about their respective products and display them in your New Relic dashboard:
+This procedure installs plugins that gather metrics about the following products and displays them in your New Relic dashboard:
 
 * **RabbitMQ**: A protocol-based messaging solution designed for cloud computing and modern, widely distributed web applications. It is the de facto standard for cloud messaging and the leading implementer of Advanced Message Queuing Protocol (AMQP), an open-standards alternative to costly, proprietary commercial messaging technologies.
 * **vFabric Web Server**: Web server and load-balancing component based on Apache HTTP Server.
@@ -19,7 +19,7 @@ This procedure installs the following plugins that gather metrics about their re
 
 1. Create a directory that will contain the Pivotal Plugins for New Relic.
 
-1. Download the latest ZIP of the Pivotal Agent for New Relic from the tags section of  [https://github.com/gopivotal/newrelic_pivotal_agent](https://github.com/gopivotal/newrelic_pivotal_agent) and extract the contents into the directory you just created.
+2. Download the latest ZIP of the Pivotal Agent for New Relic from the tags section of  [https://github.com/gopivotal/newrelic_pivotal_agent](https://github.com/gopivotal/newrelic_pivotal_agent) and extract the contents into the directory you just created.
 
 3. In the `config` directory, make a copy of the `template_newrelic_plugin.yml` file and name it `newrelic_plugin.yml`
 
@@ -31,7 +31,7 @@ This procedure installs the following plugins that gather metrics about their re
 
 5. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
 
-6. From the top-level directory, run the following commands: 
+7. From the top-level directory, run the following commands: 
 
         $ bundle install
         $ ./pivotal_agent
