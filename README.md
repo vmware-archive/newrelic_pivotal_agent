@@ -27,16 +27,18 @@ This procedure installs plugins that gather metrics about the following products
 
 5. **If you are installing the RabbitMQ plugin**: In the same `config/newrelic_plugin.yml` file, set the `rabbitmq:management_api_url` property to your RabbitMQ management URL.  The default value is `http://guest:guest@localhost:55672`, which assumes that RabbitMQ is running on the same computer on which you are installing the Pivotal Plugins for New Relic, you are using the default port (55672), and you connect using the default `guest` RabbitMQ user.  If your RabbitMQ management URL is different, update the property accordingly.
 
-5. **If you are installing the vFabric Web Server plugin**: In the `config/newrelic_plugin.yml` file, set the configuration properties for your Web Server instances, such as the host and port to which they are listening. The template shows how to configure multiple Web server instances.
+6. **If you are installing the vFabric Web Server plugin**: In the `config/newrelic_plugin.yml` file, set the configuration properties for your Web Server instances, such as the host and port to which they are listening. The template shows how to configure multiple Web server instances.
 
-5. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
+7. **If you are only using one plugin in the agent make sure the unused plugin's configuration is commented out with # in front of the lines
 
-7. From the top-level directory, run the following commands: 
+8. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
+
+9. From the top-level directory, run the following commands: 
 
         $ bundle install
         $ ./pivotal_agent
 
-7. After a brief period, the Pivotal Plugins will appear on the left of your New Relic dashboard.
+10. After a brief period, the Pivotal Plugins will appear on the left of your New Relic dashboard.
 
 ## Reporting Issues
 

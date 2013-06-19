@@ -20,8 +20,10 @@ agents:
   rabbitmq:
     # Defailt is http://guest:guest@localhost:55672
     # Must enable rabbit management plugin
+    # This shows an example configuration. If unused add # in front of the next line
     management_api_url: http://guest:guest@localhost:55672
-# Configuration for vFabric Web Server/mod_bmx
+  # Configuration for vFabric Web Server/mod_bmx
+  # This shows an example configuraiton. If unused add # in front of each line 
   httpd_mod_bmx:
       -
         hostname: localhost
