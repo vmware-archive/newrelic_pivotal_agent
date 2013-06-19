@@ -29,7 +29,7 @@ This procedure installs plugins that gather metrics about the following products
 
 6. **If you are installing the vFabric Web Server plugin**: In the `config/newrelic_plugin.yml` file, set the configuration properties for your Web Server instances, such as the host and port to which they are listening. The template shows how to configure multiple Web server instances.
 
-7. **If you are only using one plugin in the agent make sure the unused plugin's configuration is commented out with # in front of the lines
+7. **If you are only using one plugin** in the agent make sure the unused plugin's configuration is commented out with # in front of the lines
 
 8. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
 
