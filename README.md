@@ -27,13 +27,13 @@ This procedure installs the following plugins:
 
 5. For RabbitMQ: In the same `config/newrelic_plugin.yml` file, set the `rabbitmq:management_api_url` property to your RabbitMQ management URL.  The default value is `http://guest:guest@localhost:55672`, which assumes that RabbitMQ is running on the same computer on which you are installing the Pivotal Plugins for New Relic, you are using the default port (55672), and you connect using the default `guest` RabbitMQ user.  If your RabbitMQ management URL is different, update the property accordingly.
 
-For VFWS/mod_Bmx: In the same `config/newrelic_plugin.yml` file, set the configuration properties for your servers. The template contains example of multiple servers to be monitored.
+6. For VFWS/mod_Bmx: In the same `config/newrelic_plugin.yml` file, set the configuration properties for your servers. The template contains example of multiple servers to be monitored.
 
-6. From the top-level directory, run the following commands: 
+7. From the top-level directory, run the following commands: 
 
         $ bundle install
         $ ./pivotal_agent
-7. After a brief period, the Pivotal Plugins will appear in your New Relic Dashboard under the Plugins tab on the left. 
+8. After a brief period, the Pivotal Plugins will appear in your New Relic Dashboard under the Plugins tab on the left. 
 
 ## Reporting Issues
 
