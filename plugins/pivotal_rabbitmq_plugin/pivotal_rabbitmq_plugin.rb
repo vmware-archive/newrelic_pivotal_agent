@@ -42,19 +42,24 @@ module NewRelic
       end
 
       def poll_cycle
-        report_metric 'Queued Messages/Ready', 'messages', queue_size_ready
-        report_metric 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
+        begin
+          report_metric 'Queued Messages/Ready', 'messages', queue_size_ready
+          report_metric 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
 
-        report_metric 'Message Rate/Acknowledge', 'messages/sec', ack_rate
-        report_metric 'Message Rate/Confirm', 'messages/sec', confirm_rate
-        report_metric 'Message Rate/Deliver', 'messages/sec', deliver_rate
-        report_metric 'Message Rate/Publish', 'messages/sec', publish_rate
-        report_metric 'Message Rate/Return', 'messages/sec', return_unroutable_rate
+          report_metric 'Message Rate/Acknowledge', 'messages/sec', ack_rate
+          report_metric 'Message Rate/Confirm', 'messages/sec', confirm_rate
+          report_metric 'Message Rate/Deliver', 'messages/sec', deliver_rate
+          report_metric 'Message Rate/Publish', 'messages/sec', publish_rate
+          report_metric 'Message Rate/Return', 'messages/sec', return_unroutable_rate
 
-        report_metric 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-        report_metric 'Node/Sockets', 'sockets', node_info('sockets_used')
-        report_metric 'Node/Erlang Processes', 'processes', node_info('proc_used')
-        report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
+          report_metric 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
+          report_metric 'Node/Sockets', 'sockets', node_info('sockets_used')
+          report_metric 'Node/Erlang Processes', 'processes', node_info('proc_used')
+          report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
+
+        rescue Exception
+	  puts "Exception while processing metrics. Check configuration."
+        end
       end
 
       private

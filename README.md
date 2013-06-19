@@ -25,7 +25,7 @@ This procedure installs plugins that gather metrics about the following products
 
 4. Edit `config/newrelic_plugin.yml` and replace the string YOUR_LICENSE_KEY_HERE with your [New Relic license key](https://newrelic.com/docs/subscriptions/license-key).   
 
-5. **If you are installing the RabbitMQ plugin**: In the same `config/newrelic_plugin.yml` file, set the `rabbitmq:management_api_url` property to your RabbitMQ management URL.  The default value is `http://guest:guest@localhost:55672`, which assumes that RabbitMQ is running on the same computer on which you are installing the Pivotal Plugins for New Relic, you are using the default port (55672), and you connect using the default `guest` RabbitMQ user.  If your RabbitMQ management URL is different, update the property accordingly.
+5. **If you are installing the RabbitMQ plugin**: In the same `config/newrelic_plugin.yml` file, set the `rabbitmq:management_api_url` property to your RabbitMQ management URL.  The configuration file contains examples which are commented out. Different RabbitMQ version use different ports. 
 
 6. **If you are installing the vFabric Web Server plugin**: In the `config/newrelic_plugin.yml` file, set the configuration properties for your Web Server instances, such as the host and port to which they are listening. The template shows how to configure multiple Web server instances.
 
