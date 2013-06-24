@@ -71,11 +71,17 @@ module NewRelic
       # Queue size
       #
       def queue_size_for(type = nil)
-        totals_key = 'messages'
-        totals_key << "_#{type}" if type
+        #RabbitMQ 3.1 returns nothing instead of 0 when no queues are defined
+        #queues. We catch exception and return 0
+        begin
+          totals_key = 'messages'
+          totals_key << "_#{type}" if type
 
-        queue_totals = rmq_manager.overview['queue_totals']
-        queue_totals[totals_key] || 0
+          queue_totals = rmq_manager.overview['queue_totals']
+          queue_totals[totals_key] || 0
+        rescue Exception
+          return 0
+        end
       end
 
       def queue_size_ready
