@@ -45,7 +45,7 @@ module HttpdModBmxPlugin
 
     agent_config_options :hostname, :username, :password, :hostport, :agent_name, :debug, :testrun
     agent_guid "com.gopivotal.newrelic.plugins.httpd_mod_bmx"
-    agent_version "1.0.2"
+    agent_version "1.0.3"
     #
     # Each agent class must also include agent_human_labels. agent_human_labels
     # requires:
