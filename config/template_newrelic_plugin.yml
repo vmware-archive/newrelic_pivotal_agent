@@ -24,9 +24,8 @@ newrelic:
 agents:
 # Configuration for RabbitMQ
   rabbitmq:
-    # Default for RMQ 3.0 is http://guest:guest@localhost:15672
-    # Default for earlier versions is http://guest:guest@localhost:55672
     # Must enable rabbit management plugin
+    # Note: When monitoring multiple nodes you should use the real hostnames instead of localhost
     # Uncomment the appropriate line for your version
     # RabbitMQ Default URL version 3.0
     #management_api_url: http://guest:guest@localhost:15672
