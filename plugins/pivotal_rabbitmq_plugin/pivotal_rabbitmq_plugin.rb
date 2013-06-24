@@ -79,7 +79,7 @@ module NewRelic
 
           queue_totals = rmq_manager.overview['queue_totals']
           queue_totals[totals_key] || 0
-        rescue Exception
+        rescue NilClassException
           return 0
         end
       end
