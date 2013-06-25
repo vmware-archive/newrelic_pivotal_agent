@@ -57,8 +57,10 @@ module NewRelic
           report_metric 'Node/Erlang Processes', 'processes', node_info('proc_used')
           report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
 
-        rescue Exception
-	  puts "Exception while processing metrics. Check configuration."
+        rescue Exception => e
+          puts "[rabbitmq] Exception while processing metrics. Check configuration."
+          puts e.message  
+          puts e.backtrace.inspect
         end
       end
 
@@ -71,16 +73,14 @@ module NewRelic
       # Queue size
       #
       def queue_size_for(type = nil)
-        #RabbitMQ 3.1 returns nothing instead of 0 when no queues are defined
-        #queues. We catch exception and return 0
-        begin
-          totals_key = 'messages'
-          totals_key << "_#{type}" if type
+        totals_key = 'messages'
+        totals_key << "_#{type}" if type
 
-          queue_totals = rmq_manager.overview['queue_totals']
+        queue_totals = rmq_manager.overview['queue_totals']
+        if queue_totals.size == 0
+          puts "[rabbitmq] No data found for queue_totals[#{totals_key}]. Check that queues are declared."
+        else
           queue_totals[totals_key] || 0
-        rescue NilClassException
-          return 0
         end
       end
 
