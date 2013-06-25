@@ -97,8 +97,10 @@ module HttpdModBmxPlugin
         mod_bmx_stats()
         # Only do testruns once, then quit
         if "#{self.testrun}" == "true" then exit end
-      rescue
-          puts "Exception while processing metrics. Check configuration."
+      rescue Exception => e
+          puts "[vfws/mod_bmx] Exception while processing metrics. Check configuration."
+          puts e.message
+          puts e.backtrace.inspect
       end
     end
 
