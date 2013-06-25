@@ -9,7 +9,7 @@ This procedure installs plugins that gather metrics about the following products
 
 ## Before You Begin
 
-* Ensure that Ruby (version 1.9 or later if using the RabbitMQ Plugin) is installed on the computer on which you will install the Pivotal Plugins for New Relic.  
+* Ensure that Ruby (version 1.9.1 or later if using the RabbitMQ Plugin) is installed on the computer on which you will install the Pivotal Plugins for New Relic.  
 * Install the `bundle` Ruby gem.
 * Ensure that the computer on which you are installing the Pivotal plugins has network access to the computer on which the desired product to be monitored (such as RabbitMQ) is installed, or that both are installed on the same computer.
 * For RabbitMQ Monitoring: Enable the RabbitMQ management plugins by executing the `rabbitmq-plugins enable rabbitmq_management` command.  See [Management Plugins](http://www.rabbitmq.com/management.html).
