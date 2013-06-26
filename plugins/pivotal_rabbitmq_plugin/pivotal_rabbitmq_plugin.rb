@@ -58,9 +58,11 @@ module NewRelic
           report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
 
         rescue Exception => e
-          puts "[rabbitmq] Exception while processing metrics. Check configuration."
-          puts e.message  
-          puts e.backtrace.inspect
+          $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
+          $stderr.puts e.message  
+          if "#{self.debug}" == "true"
+            $stderr.puts e.backtrace.inspect
+          end
         end
       end
 
@@ -78,7 +80,7 @@ module NewRelic
 
         queue_totals = rmq_manager.overview['queue_totals']
         if queue_totals.size == 0
-          puts "[rabbitmq] No data found for queue_totals[#{totals_key}]. Check that queues are declared."
+          $stderr.puts "[RabbitMQ] No data found for queue_totals[#{totals_key}]. Check that queues are declared. No data will be reported."
         else
           queue_totals[totals_key] || 0
         end
