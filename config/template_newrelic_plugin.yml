@@ -32,6 +32,8 @@ agents:
     # RabbitMQ Default URL versions prior to 3.0
     #management_api_url: http://guest:guest@localhost:55672
     #
+    # Set "debug: true" to see additional debug output
+    #debug: false
   # Configuration for vFabric Web Server/mod_bmx
   httpd_mod_bmx:
     # The - allows you to define multiple servers
