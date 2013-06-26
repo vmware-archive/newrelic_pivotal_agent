@@ -60,8 +60,11 @@ module HttpdModBmxPlugin
     def setup_metrics
       if !self.hostport then self.hostport = 80 end
 
-      @mod_bmx_stat_url = URI.parse("http://#{self.hostname}:#{self.hostport}/bmx?query=mod_bmx_vhost:Type=forever,Host=#{hostname},Port=#{hostport}")
-
+      begin
+        @mod_bmx_stat_url = URI.parse("http://#{self.hostname}:#{self.hostport}/bmx?query=mod_bmx_vhost:Type=forever,Host=#{hostname},Port=#{hostport}")
+      rescue
+        $stderr.puts "Error Parsing URL: http://#{self.hostname}:#{self.hostport}/bmx?query=mod_bmx_vhost:Type=forever,Host=#{hostname},Port=#{hostport}"
+      end
       @metric_types = Hash.new("ms")
       @metric_types["InBytesGET"] = "bytes"
       @metric_types["InBytesPOST"] = "bytes"
@@ -97,10 +100,15 @@ module HttpdModBmxPlugin
         mod_bmx_stats()
         # Only do testruns once, then quit
         if "#{self.testrun}" == "true" then exit end
-      rescue Exception => e
-          puts "[vfws/mod_bmx] Exception while processing metrics. Check configuration."
-          puts e.message
-          puts e.backtrace.inspect
+      rescue => e
+        if "#{self.debug}" == "true"
+          $stderr.puts "[ModBmx] Exception while processing metrics. Check configuration."
+          $stderr.puts e.message
+          $stderr.puts e.backtrace.inspect
+        else 
+          $stderr.puts "[ModBmx] Exception while processing metrics. Check configuration."
+          $stderr.puts e.message
+        end
       end
     end
 
@@ -120,7 +128,12 @@ module HttpdModBmxPlugin
           lines = data.split("\n")
         end
       rescue => e
-        $stderr.puts "#{e}: #{e.backtrace.join("\n  ")}"
+        if "#{self.debug}" == "true" 
+          $stderr.puts "[ModBmx] #{e}: #{e.backtrace.join("\n  ")}"
+        else
+          $stderr.puts "[ModBmx] ERROR: #{e}"
+          $stderr.puts "[ModBmx] Please check configuration and that host is available"
+        end
       end
       return lines
     end
