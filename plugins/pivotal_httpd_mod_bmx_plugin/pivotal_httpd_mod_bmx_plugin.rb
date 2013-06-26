@@ -101,13 +101,10 @@ module HttpdModBmxPlugin
         # Only do testruns once, then quit
         if "#{self.testrun}" == "true" then exit end
       rescue => e
-        if "#{self.debug}" == "true"
-          $stderr.puts "[ModBmx] Exception while processing metrics. Check configuration."
-          $stderr.puts e.message
+        $stderr.puts "[ModBmx] Exception while processing metrics. Check configuration."
+        $stderr.puts e.message
+        if "#{self.debug}" == "true" 
           $stderr.puts e.backtrace.inspect
-        else 
-          $stderr.puts "[ModBmx] Exception while processing metrics. Check configuration."
-          $stderr.puts e.message
         end
       end
     end
@@ -128,11 +125,10 @@ module HttpdModBmxPlugin
           lines = data.split("\n")
         end
       rescue => e
+        $stderr.puts "[ModBmx] ERROR: #{e}"
+        $stderr.puts "[ModBmx] Please check configuration and that host is available"
         if "#{self.debug}" == "true" 
           $stderr.puts "[ModBmx] #{e}: #{e.backtrace.join("\n  ")}"
-        else
-          $stderr.puts "[ModBmx] ERROR: #{e}"
-          $stderr.puts "[ModBmx] Please check configuration and that host is available"
         end
       end
       return lines
