@@ -119,7 +119,7 @@ module HttpdModBmxPlugin
           flines.each {|l| lines << l}
         flines.close
         else
-          if "#{self.debug}" == "true" then puts("URL: #{staturl}") end
+          if "#{self.debug}" == "true" then puts("[ModBmx] URL: #{staturl}") end
           resp = ::Net::HTTP.get_response(staturl)
           data = resp.body
           lines = data.split("\n")
