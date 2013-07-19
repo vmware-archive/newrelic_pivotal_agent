@@ -1,6 +1,4 @@
 /Gemfile.lock
 /config/newrelic_plugin.yml
-/plugins/pivotal_httpd_mod_bmx_plugin/Gemfile.lock
-/plugins/pivotal_rabbitmq_plugin/Gemfile.lock
-/plugins/pivotal_httpd_mod_bmx_plugin/config/newrelic_plugin.yml
-/plugins/pivotal_httpd_mod_bmx_plugin/Gemfile.lock
+/plugins/*/Gemfile.lock
+/plugins/*/config/newrelic_plugin.yml

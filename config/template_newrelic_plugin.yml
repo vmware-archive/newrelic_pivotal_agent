@@ -22,6 +22,10 @@ newrelic:
 # Agent Configuration:
 #
 agents:
+# 
+# NOTE: You must uncomment and configure the plugins you want to use. By default they are
+# all disabled.
+# 
 # Configuration for RabbitMQ
   rabbitmq:
     # Must enable rabbit management plugin
@@ -34,7 +38,8 @@ agents:
     #
     # Set "debug: true" to see additional debug output
     #debug: false
-  # Configuration for vFabric Web Server/mod_bmx
+
+# Configuration for vFabric Web Server/mod_bmx
   httpd_mod_bmx:
     # The - allows you to define multiple servers
     #-
@@ -51,4 +56,23 @@ agents:
       #debug: false
       # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
       #testrun: false
+
+# Configuration for Redis
+  redis:
+    # The - allows you to define multiple servers
+    #-
+      #hostname: localhost
+      #hostport: 6379
+      # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
+      #debug: false
+      # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
+      #testrun: false
+    #-
+      #hostname: localhost
+      #hostport: 6389
+      # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
+      #debug: false
+      # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
+      #testrun: false
+
 
