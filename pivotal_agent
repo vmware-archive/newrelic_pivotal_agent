@@ -28,16 +28,20 @@
 require "rubygems"
 require "bundler/setup"
 
-#Load each module. There can only be one config/newrelic_plugin.xml 
-#These are slightly modified to not call setup_and_run if included in another file
-#without that modification this agent will break
-
-require "./plugins/pivotal_rabbitmq_plugin/pivotal_rabbitmq_plugin.rb"
-require "./plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plugin.rb"
+# Load each module. There can only be one config/newrelic_plugin.xml 
+# These are slightly modified to not call setup_and_run if included in another file
+# without that modification this agent will break
+# Adding a # in front of a require_relative line will stop that plugin from loading
+# at all. Should only need to be done in extreme circumstances
+## RabbitMQ Plugin
+require_relative "plugins/pivotal_rabbitmq_plugin/pivotal_rabbitmq_plugin.rb"
+## VFWS/Mod_BMX Plugin
+require_relative "plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plugin.rb"
 
 require "newrelic_plugin"
 
 module PivotalAgent
+  # The above require_relatives will load the plugins. The next line just sets them up 
+  # and runs them
   NewRelic::Plugin::Run.setup_and_run
-
 end
