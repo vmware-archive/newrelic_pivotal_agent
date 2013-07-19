@@ -31,7 +31,7 @@ require "net/http"
 
 #
 #
-# The entire agent should be enclosed in a "ApacheHTTPDAgent" module
+# The entire agent should be enclosed in a "HttpdModBmxPlugin" module
 #
 module HttpdModBmxPlugin
   #
