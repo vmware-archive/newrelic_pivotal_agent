@@ -43,6 +43,9 @@ require_relative "plugins/pivotal_redis_plugin/pivotal_redis_plugin.rb"
 require "newrelic_plugin"
 
 module PivotalAgent
+  # Force the location of the config file in case we aren't invoked from the correct 
+  # directory
+  NewRelic::Plugin::Config.config_file=File.dirname(__FILE__) + "/config/newrelic_plugin.yml"
   # The above require_relatives will load the plugins. The next line just sets them up 
   # and runs them
   NewRelic::Plugin::Run.setup_and_run
