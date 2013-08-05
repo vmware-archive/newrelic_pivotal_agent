@@ -37,6 +37,8 @@ require "bundler/setup"
 require_relative "plugins/pivotal_rabbitmq_plugin/pivotal_rabbitmq_plugin.rb"
 ## VFWS/Mod_BMX Plugin
 require_relative "plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plugin.rb"
+## Redis
+require_relative "plugins/pivotal_redis_plugin/pivotal_redis_plugin.rb"
 
 require "newrelic_plugin"
 
