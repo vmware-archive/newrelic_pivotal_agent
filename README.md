@@ -6,6 +6,7 @@ This procedure installs plugins that gather metrics about the following products
 
 * **RabbitMQ**: A protocol-based messaging solution designed for cloud computing and modern, widely distributed web applications. It is the de facto standard for cloud messaging and the leading implementer of Advanced Message Queuing Protocol (AMQP), an open-standards alternative to costly, proprietary commercial messaging technologies.
 * **vFabric Web Server**: Web server and load-balancing component based on Apache HTTP Server.
+* **Redis**: Redis is an open source, BSD licensed, advanced key-value store.
 
 ## Before You Begin
 
@@ -29,16 +30,18 @@ This procedure installs plugins that gather metrics about the following products
 
 6. **If you are installing the vFabric Web Server plugin**: In the `config/newrelic_plugin.yml` file, set the configuration properties for your Web Server instances, such as the host and port to which they are listening. The template shows how to configure multiple Web server instances.
 
-7. **If you are only using one plugin** in the agent make sure the unused plugin's configuration is commented out with # in front of the lines
+7. **If you are using the Redis server monitoring plugin**: In `config/newrelic_plugin.yml` file, set the configuration properties for your redis server.
 
-8. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
+8. **If you are only using one plugin** in the agent make sure the unused plugin's configuration is commented out with # in front of the lines
 
-9. From the top-level directory, run the following commands: 
+9. Be sure to comment out configuration information for plugins that you are not installing from the `config/newrelic_plugin.yml` file.
+
+10. From the top-level directory, run the following commands: 
 
         $ bundle install
         $ ./pivotal_agent
 
-10. After a brief period, the Pivotal Plugins will appear on the left of your New Relic dashboard.
+11. After a brief period, the Pivotal Plugins will appear on the left of your New Relic dashboard.
 
 ## Reporting Issues
 
