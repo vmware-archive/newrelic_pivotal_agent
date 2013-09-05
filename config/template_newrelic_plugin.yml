@@ -1,11 +1,11 @@
 # Please make sure to update the license_key information with the license key for your New Relic
 # account.
 #
-# This configuration file holds examples for all plugins. You only need to uncomment 
+# This configuration file holds examples for all plugins. You only need to uncomment
 # the lines for the product you are using.
 #
 # Example configuration is shown below. Uncomment (remove #) the needed lines for
-# your environment. 
+# your environment.
 #
 #
 newrelic:
@@ -22,10 +22,10 @@ newrelic:
 # Agent Configuration:
 #
 agents:
-# 
+#
 # NOTE: You must uncomment and configure the plugins you want to use. By default they are
 # all disabled.
-# 
+#
 # Configuration for RabbitMQ
   rabbitmq:
     # Must enable rabbit management plugin
@@ -61,6 +61,7 @@ agents:
   redis:
     # The - allows you to define multiple servers
     #-
+      #name: Production Store
       #hostname: localhost
       #hostport: 6379
       # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
@@ -68,7 +69,8 @@ agents:
       # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
       #testrun: false
     #-
-      #hostname: localhost
+      #name: Slave Store
+      #hostname: another.host.com
       #hostport: 6389
       # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
       #debug: false
