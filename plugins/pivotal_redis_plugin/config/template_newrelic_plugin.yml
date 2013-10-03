@@ -18,7 +18,8 @@ newrelic:
 agents:
   redis:
       -
-        hostname: localhost 
+        name: redis-master
+        hostname: localhost
         hostport: 6379
         # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
         debug: true
@@ -26,7 +27,8 @@ agents:
         testrun: false
 # Multiple Redit Servers may be defined
 #      -
-#        hostname: localhost 
+#        name: redis-slave
+#        hostname: another.host.com
 #        hostport: 6389
 #        # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
 #        debug: true

@@ -41,14 +41,19 @@ module RedisPlugin
   #
   class Agent < NewRelic::Plugin::Agent::Base
 
-    agent_config_options :hostname, :username, :password, :hostport, :agent_name, :debug, :testrun
+    agent_config_options :name, :hostname, :username, :password, :hostport, :agent_name, :debug, :testrun
     agent_guid "com.gopivotal.newrelic.plugins.redis"
     agent_version "1.0.4"
 
     # The block runs in the context of the agent instance.
     #
-    if :hostport then agent_human_labels("Redis") { "#{hostname}:#{hostport}" }
-    else agent_human_labels("Redis") { "#{hostname}:80" } end
+    if :name
+      agent_human_labels("Redis") { name }
+    elsif :hostport
+      agent_human_labels("Redis") { "#{hostname}:#{hostport}" }
+    else
+      agent_human_labels("Redis") { "#{hostname}:80" }
+    end
 
     def setup_metrics
       @metric_types = Hash.new("unit") # Default metric label
@@ -89,7 +94,7 @@ module RedisPlugin
       rescue => e
         $stderr.puts "[Redis] Exception while processing metrics. Check configuration."
         $stderr.puts e.message
-        if "#{self.debug}" == "true" 
+        if "#{self.debug}" == "true"
           $stderr.puts e.backtrace.inspect
         end
       end
@@ -126,10 +131,10 @@ module RedisPlugin
       end
     end
   end
-  
+
   NewRelic::Plugin::Setup.install_agent :redis, self
 
-  # Check if we're included as a module and if not we launch the agent, otherwise the 
+  # Check if we're included as a module and if not we launch the agent, otherwise the
   # main pivotal agent calls this with all the plugins installed
   #
   if __FILE__==$0
