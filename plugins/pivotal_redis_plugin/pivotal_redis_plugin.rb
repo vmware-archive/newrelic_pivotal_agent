@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # The MIT License
 #
-# Copyright (c) 2013 Pivotal
+# Copyright (c) 2013 GoPivotal, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
