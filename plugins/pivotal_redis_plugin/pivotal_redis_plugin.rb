@@ -81,7 +81,8 @@ module RedisPlugin
     def poll_cycle
       begin
         # Gather and report stats here
-        redis = Redis.new(:host => "#{self.hostname}", :port => "#{self.hostport}")
+        url = "redis://#{":#{self.password}" if self.password }@#{self.hostname}:#{self.hostport}/4"
+        redis = Redis.new('url' => url)
         info = redis.info
         report_stats(info)
         # Only do testruns once, then quit
@@ -89,7 +90,7 @@ module RedisPlugin
       rescue => e
         $stderr.puts "[Redis] Exception while processing metrics. Check configuration."
         $stderr.puts e.message
-        if "#{self.debug}" == "true" 
+        if "#{self.debug}" == "true"
           $stderr.puts e.backtrace.inspect
         end
       end
@@ -126,10 +127,10 @@ module RedisPlugin
       end
     end
   end
-  
+
   NewRelic::Plugin::Setup.install_agent :redis, self
 
-  # Check if we're included as a module and if not we launch the agent, otherwise the 
+  # Check if we're included as a module and if not we launch the agent, otherwise the
   # main pivotal agent calls this with all the plugins installed
   #
   if __FILE__==$0

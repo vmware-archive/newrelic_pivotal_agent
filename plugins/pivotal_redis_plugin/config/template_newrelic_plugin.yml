@@ -20,6 +20,8 @@ agents:
       -
         hostname: localhost 
         hostport: 6379
+        #Set "password: YOUR-PASSWORD" if you require a password auth on redis
+        #password: PASSWORD
         # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
         debug: true
         # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
