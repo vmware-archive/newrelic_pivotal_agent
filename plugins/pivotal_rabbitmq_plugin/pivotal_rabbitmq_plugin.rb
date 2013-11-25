@@ -34,7 +34,7 @@ module NewRelic
   module RabbitMQPlugin
     class Agent < NewRelic::Plugin::Agent::Base
       agent_guid 'com.pivotal.newrelic.plugin.rabbitmq'
-      agent_version '1.0.4'
+      agent_version '1.0.5'
       agent_config_options :management_api_url
       agent_human_labels('RabbitMQ') do
         uri = URI.parse(management_api_url)
@@ -56,6 +56,8 @@ module NewRelic
           report_metric 'Node/Sockets', 'sockets', node_info('sockets_used')
           report_metric 'Node/Erlang Processes', 'processes', node_info('proc_used')
           report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
+
+          report_queues
 
         rescue Exception => e
           $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
@@ -139,6 +141,17 @@ module NewRelic
 
       def user_count
         rmq_manager.users.length
+      end
+
+      def report_queues
+        return unless rmq_manager.queues.length > 0
+        rmq_manager.queues.each do |q|
+          report_metric q['name'] + '/Messages/Ready', 'message', q['messages_ready']
+          report_metric q['name'] + '/Memory', 'bytes', q['memory']
+          report_metric q['name'] + '/Messages/Total', 'message', q['messages']
+          report_metric q['name'] + '/Consumers/Total', 'consumers', q['consumers']
+          report_metric q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+        end
       end
     end
 
