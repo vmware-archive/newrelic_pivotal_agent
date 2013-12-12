@@ -41,7 +41,7 @@ module RedisPlugin
   #
   class Agent < NewRelic::Plugin::Agent::Base
 
-    agent_config_options :hostname, :username, :password, :hostport, :agent_name, :debug, :testrun
+    agent_config_options :hostname, :password, :hostport, :agent_name, :debug, :testrun
     agent_guid "com.gopivotal.newrelic.plugins.redis"
     agent_version "1.0.4"
 
@@ -80,8 +80,13 @@ module RedisPlugin
 
     def poll_cycle
       begin
-        # Gather and report stats here
-        redis = Redis.new(:host => "#{self.hostname}", :port => "#{self.hostport}")
+        options = Hash.new
+        options[:host] = "#{self.hostname}"
+        options[:port] = "#{self.hostport}"
+        if self.password
+          options[:password] = "#{self.password}"
+        end
+        redis = Redis.new(options)
         info = redis.info
         report_stats(info)
         # Only do testruns once, then quit
