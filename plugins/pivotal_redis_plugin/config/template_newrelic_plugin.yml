@@ -11,7 +11,7 @@ newrelic:
   # Set to '1' for verbose output, remove for normal output.
   # All output goes to stdout/stderr.
   #
-  verbose: 1
+  verbose: 0
 #
 # Agent Configuration:
 #
@@ -21,7 +21,7 @@ agents:
         hostname: localhost 
         hostport: 6379
         # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
-        debug: true
+        debug: false
         # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
         testrun: false
 # Multiple Redit Servers may be defined
@@ -29,7 +29,7 @@ agents:
 #        hostname: localhost 
 #        hostport: 6389
 #        # Set "debug: true" to see metrics in stdout instead of sent to New Relic"
-#        debug: true
+#        debug: false
 #        # Set "testrun: true" to use input from local text/html files. Only parses input once, then quits.
 #        testrun: false
 
