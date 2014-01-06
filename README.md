@@ -12,6 +12,7 @@ This procedure installs plugins that gather metrics about the following products
 
 * The RabbitMQ Plugin now reports queue individual queue stats and a new Queues Dashboard has been introduced.
 * The default verbose setting has been changed to 0 to reduce the output in log files.
+* Redis plugin now supports passwords
 
 ## Before You Begin
 
