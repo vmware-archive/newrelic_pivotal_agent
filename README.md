@@ -8,7 +8,7 @@ This procedure installs plugins that gather metrics about the following products
 * **vFabric Web Server**: Web server and load-balancing component based on Apache HTTP Server.
 * **Redis**: Redis is an open source, BSD licensed, advanced key-value store.
 
-## What's New in v1.0.4
+## What's New in v1.0.5
 
 * The RabbitMQ Plugin now reports queue individual queue stats and a new Queues Dashboard has been introduced.
 * The default verbose setting has been changed to 0 to reduce the output in log files.
