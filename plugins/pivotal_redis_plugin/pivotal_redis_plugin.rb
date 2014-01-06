@@ -43,7 +43,7 @@ module RedisPlugin
 
     agent_config_options :hostname, :password, :hostport, :agent_name, :debug, :testrun
     agent_guid "com.gopivotal.newrelic.plugins.redis"
-    agent_version "1.0.4"
+    agent_version "1.0.5"
 
     # The block runs in the context of the agent instance.
     #
