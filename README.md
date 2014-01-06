@@ -8,6 +8,11 @@ This procedure installs plugins that gather metrics about the following products
 * **vFabric Web Server**: Web server and load-balancing component based on Apache HTTP Server.
 * **Redis**: Redis is an open source, BSD licensed, advanced key-value store.
 
+## What's New in v1.0.4
+
+* The RabbitMQ Plugin now reports queue individual queue stats and a new Queues Dashboard has been introduced.
+* The default verbose setting has been changed to 0 to reduce the output in log files.
+
 ## Before You Begin
 
 * Ensure that Ruby (version 1.9.1 or later if using the RabbitMQ Plugin) is installed on the computer on which you will install the Pivotal Plugins for New Relic.  
