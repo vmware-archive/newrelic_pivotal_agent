@@ -146,11 +146,11 @@ module NewRelic
       def report_queues
         return unless rmq_manager.queues.length > 0
         rmq_manager.queues.each do |q|
-          report_metric 'Queue/' + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
-          report_metric 'Queue/' + q['name'] + '/Memory', 'bytes', q['memory']
-          report_metric 'Queue/' + q['name'] + '/Messages/Total', 'message', q['messages']
-          report_metric 'Queue/' + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
-          report_metric 'Queue/' + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
+          report_metric 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
+          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
+          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
+          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
         end
       end
     end
