@@ -89,6 +89,7 @@ module RedisPlugin
         redis = Redis.new(options)
         info = redis.info
         report_stats(info)
+        redis.client.disconnect
         # Only do testruns once, then quit
         if "#{self.testrun}" == "true" then exit end
       rescue => e
