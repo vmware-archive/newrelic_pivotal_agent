@@ -55,7 +55,13 @@ This procedure installs plugins that gather metrics about the following products
 
 ## Reporting Issues
 
-Report any issues with these plugins with the Github [issue tracker](https://github.com/gopivotal/newrelic_pivotal_agent/issues)
+Report any issues with these plugins with the Github [issue tracker](https://github.com/pivotalsoftware/newrelic_pivotal_agent/issues)
+
+When reporting issues please note the following:
+
+* Open new issues: Please do not comment on someone else's issue with regards to your own issue. Often different people may have similar errors but different solutions. It makes it difficult to help multiple people on the same issue thead.
+* Be as specific as possible. Include pivotal_agent version, monitored software version, log information, etc
+
 
 ## Contributing
 
