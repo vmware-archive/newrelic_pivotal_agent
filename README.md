@@ -61,7 +61,7 @@ When reporting issues please note the following:
 
 * Open new issues: Please do not comment on someone else's issue with regards to your own issue. Often different people may have similar errors but different solutions. It makes it difficult to help multiple people on the same issue thead.
 * Be as specific as possible. Include pivotal_agent version, monitored software version, log information, etc
-
+* Some problems are directly related with new relic or new relic agent. Faster help would come from reporting them directly to New Relic.
 
 ## Contributing
 
