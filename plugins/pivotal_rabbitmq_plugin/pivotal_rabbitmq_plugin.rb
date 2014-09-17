@@ -146,11 +146,12 @@ module NewRelic
       def report_queues
         return unless rmq_manager.queues.length > 0
         rmq_manager.queues.each do |q|
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+          prefix = q['vhost'][0] == '/' ? 'Queue' : 'Queue/'
+          report_metric prefix + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
+          report_metric prefix + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
+          report_metric prefix + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
+          report_metric prefix + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
+          report_metric prefix + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
         end
       end
     end
