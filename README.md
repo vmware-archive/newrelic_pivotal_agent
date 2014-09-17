@@ -53,3 +53,6 @@ This procedure installs plugins that gather metrics about the following products
 
 Report any issues with these plugins with the Github [issue tracker](https://github.com/gopivotal/newrelic_pivotal_agent/issues)
 
+## Contributing
+
+Please read [CONTRIBUTING.md][CONTRIBUTING.md] for more information
