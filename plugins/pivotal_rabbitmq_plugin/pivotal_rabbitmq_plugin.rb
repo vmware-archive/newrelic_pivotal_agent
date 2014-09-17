@@ -61,7 +61,7 @@ module NewRelic
 
         rescue Exception => e
           $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
-          $stderr.puts e.message  
+          $stderr.puts e.message
           if "#{self.debug}" == "true"
             $stderr.puts e.backtrace.inspect
           end
@@ -146,11 +146,16 @@ module NewRelic
       def report_queues
         return unless rmq_manager.queues.length > 0
         rmq_manager.queues.each do |q|
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+          queue_name = if q['vhost'] == '/'
+            q['vhost'] + q['name']
+          else
+            q['vhost'] + '.' + q['name']
+          end
+          report_metric 'Queue' + queue_name + '/Messages/Ready', 'message', q['messages_ready']
+          report_metric 'Queue' + queue_name + '/Memory', 'bytes', q['memory']
+          report_metric 'Queue' + queue_name + '/Messages/Total', 'message', q['messages']
+          report_metric 'Queue' + queue_name + '/Consumers/Total', 'consumers', q['consumers']
+          report_metric 'Queue' + queue_name + '/Consumers/Active', 'consumers', q['active_consumers']
         end
       end
     end
