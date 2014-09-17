@@ -37,6 +37,7 @@ agents:
     #management_api_url: http://guest:guest@localhost:55672
     #
     # Set "debug: true" to see additional debug output
+    # Note: This logs the metrics locally and does not send data to new relic.
     #debug: false
 
 # Configuration for vFabric Web Server/mod_bmx

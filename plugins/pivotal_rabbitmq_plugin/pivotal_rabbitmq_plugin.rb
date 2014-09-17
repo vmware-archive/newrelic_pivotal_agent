@@ -43,19 +43,23 @@ module NewRelic
 
       def poll_cycle
         begin
-          report_metric 'Queued Messages/Ready', 'messages', queue_size_ready
-          report_metric 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
+          if "#{self.debug}" == "true" 
+            puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
+          end
 
-          report_metric 'Message Rate/Acknowledge', 'messages/sec', ack_rate
-          report_metric 'Message Rate/Confirm', 'messages/sec', confirm_rate
-          report_metric 'Message Rate/Deliver', 'messages/sec', deliver_rate
-          report_metric 'Message Rate/Publish', 'messages/sec', publish_rate
-          report_metric 'Message Rate/Return', 'messages/sec', return_unroutable_rate
+          report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
+          report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
 
-          report_metric 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-          report_metric 'Node/Sockets', 'sockets', node_info('sockets_used')
-          report_metric 'Node/Erlang Processes', 'processes', node_info('proc_used')
-          report_metric 'Node/Memory Used', 'bytes', node_info('mem_used')
+          report_metric_check_debug 'Message Rate/Acknowledge', 'messages/sec', ack_rate
+          report_metric_check_debug 'Message Rate/Confirm', 'messages/sec', confirm_rate
+          report_metric_check_debug 'Message Rate/Deliver', 'messages/sec', deliver_rate
+          report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
+          report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
+
+          report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
+          report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
+          report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
+          report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
 
           report_queues
 
@@ -68,6 +72,13 @@ module NewRelic
         end
       end
 
+      def report_metric_check_debug(metricname, metrictype, metricvalue)
+        if "#{self.debug}" == "true"
+          puts("#{metricname}[#{metrictype}] : #{metricvalue}")
+        else
+          report_metric_check_debug metricname, metrictype, metricvalue
+        end
+      end
       private
       def rmq_manager
         @rmq_manager ||= ::RabbitMQManager.new(management_api_url)
@@ -146,11 +157,11 @@ module NewRelic
       def report_queues
         return unless rmq_manager.queues.length > 0
         rmq_manager.queues.each do |q|
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
-          report_metric 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
+          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
+          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
+          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
+          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
         end
       end
     end
