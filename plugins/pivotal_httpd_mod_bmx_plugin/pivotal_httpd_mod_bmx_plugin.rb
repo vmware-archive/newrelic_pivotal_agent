@@ -97,6 +97,10 @@ module HttpdModBmxPlugin
 
     def poll_cycle
       begin
+        if "#{self.debug}" == "true"
+          puts "[ModBmx] Debug Mode On: Metric data will not be sent to new relic"
+        end
+
         mod_bmx_stats()
         # Only do testruns once, then quit
         if "#{self.testrun}" == "true" then exit end
