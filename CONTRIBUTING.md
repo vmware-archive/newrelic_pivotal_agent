@@ -20,8 +20,8 @@ Please open an issue in the [GitHub issue tracker][] if you have any questions r
 
 Please print, sign, scan, and email per the instructions in the document appropriate for you
 
- * [Generic Corporate License Agreement.docx](docs/Generic Corporate License Agreement.docx)
- * [Generic Individual License Agreement.docx](docs/Generic Individual License Agreement.docx)
+ * [Generic Corporate Contributor License Agreement.docx](https://github.com/pivotalsoftware/newrelic_pivotal_agent/raw/contributing/docs/Generic%20Corporate%20Contributor%20License%20Agreement.docx)
+ * [Generic Individual Contributor License Agreement.docx](https://github.com/pivotalsoftware/newrelic_pivotal_agent/raw/contributing/docs/Generic%20Individual%20Contributor%20License%20Agreement.docx)
 
 ## Use short branch names
 Branches used when submitting pull requests should preferably using succinct, lower-case, dash (-) delimited names, such as 'fix-warnings', 'fix-typo', etc. In [fork-and-edit][] cases, the GitHub default 'patch-1' is fine as well. This is important, because branch names show up in the merge commits that result from accepting pull requests, and should be as expressive and concise as possible.
