@@ -65,4 +65,4 @@ When reporting issues please note the following:
 
 ## Contributing
 
-Please read [CONTRIBUTING.md][CONTRIBUTING.md] for more information
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more information
