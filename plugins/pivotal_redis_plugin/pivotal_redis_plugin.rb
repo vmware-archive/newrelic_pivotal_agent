@@ -80,6 +80,10 @@ module RedisPlugin
 
     def poll_cycle
       begin
+          if "#{self.debug}" == "true"
+            puts "[Redis] Debug Mode On: Metric data will not be sent to new relic"
+          end
+
         options = Hash.new
         options[:host] = "#{self.hostname}"
         options[:port] = "#{self.hostport}"
