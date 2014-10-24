@@ -25,8 +25,10 @@
 # THE SOFTWARE.
 
 
-require "rubygems"
 require "bundler/setup"
+require "newrelic_plugin"
+require 'optparse'
+require "rubygems"
 
 # Load each module. There can only be one config/newrelic_plugin.xml 
 # These are slightly modified to not call setup_and_run if included in another file
@@ -40,12 +42,36 @@ require_relative "plugins/pivotal_httpd_mod_bmx_plugin/pivotal_httpd_mod_bmx_plu
 ## Redis
 require_relative "plugins/pivotal_redis_plugin/pivotal_redis_plugin.rb"
 
-require "newrelic_plugin"
+# Force the location of the config file in case we aren't invoked from the correct 
+# directory
+NewRelic::Plugin::Config.config_file=File.dirname(__FILE__) + "/config/newrelic_plugin.yml"
+
+options = OptionParser.new do |opts|
+  opts.banner = <<-EOF
+Usage:
+  newrelic_pivotal_agent [options]
+EOF
+
+  opts.on("-c", "--config FILE", "Override the location of the newrelic_plugin.yml") do |filename|
+    NewRelic::Plugin::Config.config_file = filename
+  end
+
+  opts.on("-h", "--help") do
+    puts opts
+    if File.basename($0) == File.basename(__FILE__)
+      exit 0
+    end
+  end
+end
+
+args = options.parse!(ARGV)
+
+if !File.exists? NewRelic::Plugin::Config.config_file
+  puts "Agent config file not found: #{NewRelic::Plugin::Config.config_file.inspect}"
+  exit 1
+end
 
 module PivotalAgent
-  # Force the location of the config file in case we aren't invoked from the correct 
-  # directory
-  NewRelic::Plugin::Config.config_file=File.dirname(__FILE__) + "/config/newrelic_plugin.yml"
   # The above require_relatives will load the plugins. The next line just sets them up 
   # and runs them
   NewRelic::Plugin::Run.setup_and_run
