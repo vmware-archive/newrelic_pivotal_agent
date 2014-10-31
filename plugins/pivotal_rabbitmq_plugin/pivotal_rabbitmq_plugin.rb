@@ -76,7 +76,7 @@ module NewRelic
         if "#{self.debug}" == "true"
           puts("#{metricname}[#{metrictype}] : #{metricvalue}")
         else
-          report_metric_check_debug metricname, metrictype, metricvalue
+          report_metric metricname, metrictype, metricvalue
         end
       end
       private
