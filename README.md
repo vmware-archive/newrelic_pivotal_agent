@@ -1,11 +1,11 @@
-# Pivotal Plugins for New Relic
+# Pivotal Plugins for New Relic Monitoring
 
 This README describes how to install and configure the Pivotal Plugins for New Relic.  For convenenience, the procedure installs all plugins at once. 
 
 This procedure installs plugins that gather metrics about the following products and displays them in your New Relic dashboard:
 
 * **RabbitMQ**: A protocol-based messaging solution designed for cloud computing and modern, widely distributed web applications. It is the de facto standard for cloud messaging and the leading implementer of Advanced Message Queuing Protocol (AMQP), an open-standards alternative to costly, proprietary commercial messaging technologies.
-* **vFabric Web Server**: Web server and load-balancing component based on Apache HTTP Server.
+* **Pivotal Web Server**: Web server and load-balancing component based on Apache HTTP Server.
 * **Redis**: Redis is an open source, BSD licensed, advanced key-value store.
 
 ## What's New in v1.0.6 (beta)
