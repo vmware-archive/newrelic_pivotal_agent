@@ -1,5 +1,7 @@
 # Pivotal Plugins for New Relic Monitoring
 
+*This project is unsupported* - Please see "Support" section below for more details
+
 This README describes how to install and configure the Pivotal Plugins for New Relic.  For convenenience, the procedure installs all plugins at once. 
 
 This procedure installs plugins that gather metrics about the following products and displays them in your New Relic dashboard:
@@ -55,7 +57,7 @@ This procedure installs plugins that gather metrics about the following products
 
 ## Support
 
-**Support is not guaranteed** - This project is considered a community project and as such we are only able to provide support on an as available basis.
+**Support is not guaranteed** - This project is considered a community project and as such we are only able to provide support on a limited as time is available basis.
 
 Report any issues with these plugins with the Github [issue tracker](https://github.com/pivotalsoftware/newrelic_pivotal_agent/issues)
 
