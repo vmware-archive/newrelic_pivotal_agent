@@ -53,7 +53,9 @@ This procedure installs plugins that gather metrics about the following products
 
 11. After a brief period, the Pivotal Plugins will appear on the left of your New Relic dashboard.
 
-## Reporting Issues
+## Support
+
+**Support is not guaranteed** - This project is considered a community project and as such we are only able to provide support on an as available basis.
 
 Report any issues with these plugins with the Github [issue tracker](https://github.com/pivotalsoftware/newrelic_pivotal_agent/issues)
 
