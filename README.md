@@ -13,6 +13,7 @@ This procedure installs plugins that gather metrics about the following products
 ## What's New in v1.0.6 (beta)
 
 * The rabbitmq debug logging option now works properly
+* Support for running as a daemon
 
 ## What's New in v1.0.5
 
