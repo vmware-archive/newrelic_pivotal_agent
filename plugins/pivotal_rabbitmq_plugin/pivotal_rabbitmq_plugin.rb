@@ -81,9 +81,6 @@ module NewRelic
         @rmq_manager ||= ::RabbitMQManager.new(management_api_url)
       end
 
-      #
-      # Queue size
-      #
       def queue_size_for(type = nil)
         totals_key = 'messages'
         totals_key << "_#{type}" if type
@@ -104,9 +101,6 @@ module NewRelic
         queue_size_for 'unacknowledged'
       end
 
-      #
-      # Rates
-      #
       def ack_rate
         rate_for 'ack'
       end
@@ -138,9 +132,6 @@ module NewRelic
         rate_for 'return_unroutable'
       end
 
-      #
-      # Node info
-      #
       def node_info(key)
         default_node_name = rmq_manager.overview['node']
         node = rmq_manager.node(default_node_name)
@@ -165,9 +156,7 @@ module NewRelic
 
     NewRelic::Plugin::Setup.install_agent :rabbitmq, self
 
-    #
     # Launch the agent; this never returns.
-    #
     NewRelic::Plugin::Run.setup_and_run if __FILE__ == $PROGRAM_NAME
   end
 end
