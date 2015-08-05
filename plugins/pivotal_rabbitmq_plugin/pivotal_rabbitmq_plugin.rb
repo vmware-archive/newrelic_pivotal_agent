@@ -41,38 +41,34 @@ module NewRelic
       end
 
       def poll_cycle
-        begin
-          if "#{self.debug}" == "true" 
-            puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
-          end
-
-          report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
-          report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
-
-          report_metric_check_debug 'Message Rate/Acknowledge', 'messages/sec', ack_rate
-          report_metric_check_debug 'Message Rate/Confirm', 'messages/sec', confirm_rate
-          report_metric_check_debug 'Message Rate/Deliver', 'messages/sec', deliver_rate
-          report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
-          report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
-
-          report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-          report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
-          report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
-          report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
-
-          report_queues
-
-        rescue Exception => e
-          $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
-          $stderr.puts e.message  
-          if "#{self.debug}" == "true"
-            $stderr.puts e.backtrace.inspect
-          end
+        if "#{debug}" == "true"
+          puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
         end
+
+        report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
+        report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
+
+        report_metric_check_debug 'Message Rate/Acknowledge', 'messages/sec', ack_rate
+        report_metric_check_debug 'Message Rate/Confirm', 'messages/sec', confirm_rate
+        report_metric_check_debug 'Message Rate/Deliver', 'messages/sec', deliver_rate
+        report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
+        report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
+
+        report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
+        report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
+        report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
+        report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
+
+        report_queues
+
+      rescue Exception => e
+        $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
+        $stderr.puts e.message
+        $stderr.puts e.backtrace.inspect if "#{debug}" == "true"
       end
 
       def report_metric_check_debug(metricname, metrictype, metricvalue)
-        if "#{self.debug}" == "true"
+        if "#{debug}" == "true"
           puts("#{metricname}[#{metrictype}] : #{metricvalue}")
         else
           report_metric metricname, metrictype, metricvalue
