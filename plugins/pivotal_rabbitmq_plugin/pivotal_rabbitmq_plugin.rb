@@ -129,11 +129,11 @@ module NewRelic
       end
 
       def report_nodes
-        rmq_manager.nodes.each do |node|
-          report_metric_check_debug mk_path('Node', node['name'], 'File Descriptors'), 'file_descriptors', node_info['fd_used']
-          report_metric_check_debug mk_path('Node', node['name'], 'Sockets'), 'sockets', node_info['sockets_used']
-          report_metric_check_debug mk_path('Node', node['name'], 'Erlang Processes'), 'processes', node_info['proc_used']
-          report_metric_check_debug mk_path('Node', node['name'], 'Memory Used'), 'bytes', node_info['mem_used']
+        rmq_manager.nodes.each do |n|
+          report_metric_check_debug mk_path('Node', n['name'], 'File Descriptors'), 'file_descriptors', n['fd_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Sockets'), 'sockets', n['sockets_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Erlang Processes'), 'processes', n['proc_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Memory Used'), 'bytes', n['mem_used']
         end
       end
 
