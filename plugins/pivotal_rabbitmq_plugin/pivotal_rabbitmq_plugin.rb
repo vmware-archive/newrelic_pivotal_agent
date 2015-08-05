@@ -47,6 +47,7 @@ module NewRelic
             puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
           end
 
+          @overview = rmq_manager.overview
           report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
           report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
 
@@ -87,7 +88,7 @@ module NewRelic
         totals_key = 'messages'
         totals_key << "_#{type}" if type
 
-        queue_totals = rmq_manager.overview['queue_totals']
+        queue_totals = @overview['queue_totals']
         if queue_totals.size == 0
           $stderr.puts "[RabbitMQ] No data found for queue_totals[#{totals_key}]. Check that queues are declared. No data will be reported."
         else
@@ -123,7 +124,7 @@ module NewRelic
       end
 
       def rate_for(type)
-        msg_stats = rmq_manager.overview['message_stats']
+        msg_stats = @overview['message_stats']
 
         if msg_stats.is_a?(Hash)
           details = msg_stats["#{type}_details"]
@@ -138,7 +139,7 @@ module NewRelic
       end
 
       def report_node
-        default_node_name = rmq_manager.overview['node']
+        default_node_name = @overview['node']
         node_info = rmq_manager.node(default_node_name)
         report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info['fd_used']
         report_metric_check_debug 'Node/Sockets', 'sockets', node_info['sockets_used']
