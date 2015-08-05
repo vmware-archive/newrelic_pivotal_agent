@@ -56,11 +56,7 @@ module NewRelic
           report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
           report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
 
-          report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-          report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
-          report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
-          report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
-
+          report_node
           report_queues
 
         rescue Exception => e
@@ -141,13 +137,13 @@ module NewRelic
         rate_for 'return_unroutable'
       end
 
-      #
-      # Node info
-      #
-      def node_info(key)
+      def report_node
         default_node_name = rmq_manager.overview['node']
-        node = rmq_manager.node(default_node_name)
-        node[key]
+        node_info = rmq_manager.node(default_node_name)
+        report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info['fd_used']
+        report_metric_check_debug 'Node/Sockets', 'sockets', node_info['sockets_used']
+        report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info['proc_used']
+        report_metric_check_debug 'Node/Memory Used', 'bytes', node_info['mem_used']
       end
 
       def user_count
