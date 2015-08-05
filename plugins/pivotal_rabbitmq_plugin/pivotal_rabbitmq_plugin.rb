@@ -53,11 +53,7 @@ module NewRelic
         report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
         report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
 
-        report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-        report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
-        report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
-        report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
-
+        report_nodes
         report_queues
 
       rescue => e
@@ -131,13 +127,13 @@ module NewRelic
         rate_for 'return_unroutable'
       end
 
-      def report_node
-        default_node_name = @overview['node']
-        node_info = rmq_manager.node(default_node_name)
-        report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info['fd_used']
-        report_metric_check_debug 'Node/Sockets', 'sockets', node_info['sockets_used']
-        report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info['proc_used']
-        report_metric_check_debug 'Node/Memory Used', 'bytes', node_info['mem_used']
+      def report_nodes
+        rmq_manager.nodes.each do |node|
+          report_metric_check_debug mk_path('Node', node['name'], 'File Descriptors'), 'file_descriptors', node_info['fd_used']
+          report_metric_check_debug mk_path('Node', node['name'], 'Sockets'), 'sockets', node_info['sockets_used']
+          report_metric_check_debug mk_path('Node', node['name'], 'Erlang Processes'), 'processes', node_info['proc_used']
+          report_metric_check_debug mk_path('Node', node['name'], 'Memory Used'), 'bytes', node_info['mem_used']
+        end
       end
 
       def report_queues
