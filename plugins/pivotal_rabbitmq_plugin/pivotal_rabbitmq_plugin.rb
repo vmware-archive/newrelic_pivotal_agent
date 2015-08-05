@@ -41,7 +41,7 @@ module NewRelic
       end
 
       def poll_cycle
-        if "#{debug}" == "true"
+        if debug
           puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
         end
 
@@ -64,11 +64,11 @@ module NewRelic
       rescue => e
         $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
         $stderr.puts e.message
-        $stderr.puts e.backtrace.inspect if "#{debug}" == "true"
+        $stderr.puts e.backtrace.inspect if debug
       end
 
       def report_metric_check_debug(metricname, metrictype, metricvalue)
-        if "#{debug}" == "true"
+        if debug
           puts("#{metricname}[#{metrictype}] : #{metricvalue}")
         else
           report_metric metricname, metrictype, metricvalue
