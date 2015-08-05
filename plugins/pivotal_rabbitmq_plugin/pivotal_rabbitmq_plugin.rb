@@ -61,7 +61,7 @@ module NewRelic
 
         report_queues
 
-      rescue Exception => e
+      rescue => e
         $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
         $stderr.puts e.message
         $stderr.puts e.backtrace.inspect if "#{debug}" == "true"
