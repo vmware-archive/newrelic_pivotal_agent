@@ -23,7 +23,6 @@
 # THE SOFTWARE.
 #
 
-
 require 'rubygems'
 require 'bundler/setup'
 require 'newrelic_plugin'
@@ -79,7 +78,9 @@ module NewRelic
           report_metric metricname, metrictype, metricvalue
         end
       end
+
       private
+
       def rmq_manager
         @rmq_manager ||= ::RabbitMQManager.new(management_api_url)
       end
