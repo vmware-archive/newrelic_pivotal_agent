@@ -168,8 +168,6 @@ module NewRelic
     #
     # Launch the agent; this never returns.
     #
-    if __FILE__==$0
-      NewRelic::Plugin::Run.setup_and_run
-    end
+    NewRelic::Plugin::Run.setup_and_run if __FILE__ == $PROGRAM_NAME
   end
 end
