@@ -141,10 +141,6 @@ module NewRelic
         report_metric_check_debug 'Node/Memory Used', 'bytes', node_info['mem_used']
       end
 
-      def user_count
-        rmq_manager.users.length
-      end
-
       def report_queues
         rmq_manager.queues.each do |q|
           next if q['name'].start_with?('amq.gen')
