@@ -1,0 +1,4 @@
+.git/*
+config/newrelic_plugin.yml
+plugins/*/Gemfile.lock
+plugins/*/config/newrelic_plugin.yml
