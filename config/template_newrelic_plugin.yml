@@ -36,6 +36,9 @@ agents:
     # RabbitMQ Default URL versions prior to 3.0
     #management_api_url: http://guest:guest@localhost:55672
     #
+    # You can override the component name. If this is not used, the server host/port are used as the component name.
+    #component_name: 'Server A'
+    #
     # Set "debug: true" to see additional debug output
     # Note: This logs the metrics locally and does not send data to new relic.
     #debug: false
