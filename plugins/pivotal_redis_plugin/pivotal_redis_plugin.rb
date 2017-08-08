@@ -41,13 +41,16 @@ module RedisPlugin
   #
   class Agent < NewRelic::Plugin::Agent::Base
 
-    agent_config_options :hostname, :password, :hostport, :agent_name, :debug, :testrun
+    agent_config_options :hostname, :password, :hostport, :agent_name, :debug, :testrun, :component_name
     agent_guid "com.gopivotal.newrelic.plugins.redis"
     agent_version "1.0.5"
 
     # The block runs in the context of the agent instance.
     #
-    if :hostport then agent_human_labels("Redis") { "#{hostname}:#{hostport}" }
+    #
+    if :component_name then agent_human_labels("Redis") { "#{component_name} - #{hostname}:#{hostport}" }
+   
+    #if :hostport then agent_human_labels("Redis") { "#{hostname}:#{hostport}" }
     else agent_human_labels("Redis") { "#{hostname}:80" } end
 
     def setup_metrics
