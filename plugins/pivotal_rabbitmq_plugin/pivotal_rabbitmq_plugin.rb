@@ -23,7 +23,6 @@
 # THE SOFTWARE.
 #
 
-
 require 'rubygems'
 require 'bundler/setup'
 require 'newrelic_plugin'
@@ -37,61 +36,52 @@ module NewRelic
       agent_version '1.0.5'
       agent_config_options :management_api_url, :debug
       agent_human_labels('RabbitMQ') do
-        uri = URI.parse(management_api_url)
-        "#{uri.host}:#{uri.port}"
+        rmq_manager.overview["cluster_name"]
       end
 
       def poll_cycle
-        begin
-          if "#{self.debug}" == "true" 
-            puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
-          end
-
-          report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
-          report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
-
-          report_metric_check_debug 'Message Rate/Acknowledge', 'messages/sec', ack_rate
-          report_metric_check_debug 'Message Rate/Confirm', 'messages/sec', confirm_rate
-          report_metric_check_debug 'Message Rate/Deliver', 'messages/sec', deliver_rate
-          report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
-          report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
-
-          report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-          report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
-          report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
-          report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
-
-          report_queues
-
-        rescue Exception => e
-          $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
-          $stderr.puts e.message  
-          if "#{self.debug}" == "true"
-            $stderr.puts e.backtrace.inspect
-          end
+        if debug
+          puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
         end
+
+        @overview = rmq_manager.overview
+        report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
+        report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
+
+        report_metric_check_debug 'Message Rate/Acknowledge', 'messages/sec', ack_rate
+        report_metric_check_debug 'Message Rate/Confirm', 'messages/sec', confirm_rate
+        report_metric_check_debug 'Message Rate/Deliver', 'messages/sec', deliver_rate
+        report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
+        report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
+
+        report_nodes
+        report_queues
+
+      rescue => e
+        $stderr.puts "[RabbitMQ] Exception while processing metrics. Check configuration."
+        $stderr.puts e.message
+        $stderr.puts e.backtrace.inspect if debug
       end
 
       def report_metric_check_debug(metricname, metrictype, metricvalue)
-        if "#{self.debug}" == "true"
+        if debug
           puts("#{metricname}[#{metrictype}] : #{metricvalue}")
         else
           report_metric metricname, metrictype, metricvalue
         end
       end
+
       private
+
       def rmq_manager
         @rmq_manager ||= ::RabbitMQManager.new(management_api_url)
       end
 
-      #
-      # Queue size
-      #
       def queue_size_for(type = nil)
         totals_key = 'messages'
         totals_key << "_#{type}" if type
 
-        queue_totals = rmq_manager.overview['queue_totals']
+        queue_totals = @overview['queue_totals']
         if queue_totals.size == 0
           $stderr.puts "[RabbitMQ] No data found for queue_totals[#{totals_key}]. Check that queues are declared. No data will be reported."
         else
@@ -107,9 +97,6 @@ module NewRelic
         queue_size_for 'unacknowledged'
       end
 
-      #
-      # Rates
-      #
       def ack_rate
         rate_for 'ack'
       end
@@ -127,7 +114,7 @@ module NewRelic
       end
 
       def rate_for(type)
-        msg_stats = rmq_manager.overview['message_stats']
+        msg_stats = @overview['message_stats']
 
         if msg_stats.is_a?(Hash)
           details = msg_stats["#{type}_details"]
@@ -141,39 +128,34 @@ module NewRelic
         rate_for 'return_unroutable'
       end
 
-      #
-      # Node info
-      #
-      def node_info(key)
-        default_node_name = rmq_manager.overview['node']
-        node = rmq_manager.node(default_node_name)
-        node[key]
-      end
-
-      def user_count
-        rmq_manager.users.length
+      def report_nodes
+        rmq_manager.nodes.each do |n|
+          report_metric_check_debug mk_path('Node', n['name'], 'File Descriptors'), 'file_descriptors', n['fd_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Sockets'), 'sockets', n['sockets_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Erlang Processes'), 'processes', n['proc_used']
+          report_metric_check_debug mk_path('Node', n['name'], 'Memory Used'), 'bytes', n['mem_used']
+        end
       end
 
       def report_queues
-        return unless rmq_manager.queues.length > 0
         rmq_manager.queues.each do |q|
           next if q['name'].start_with?('amq.gen')
-          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Messages/Ready', 'message', q['messages_ready']
-          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Memory', 'bytes', q['memory']
-          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Messages/Total', 'message', q['messages']
-          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Consumers/Total', 'consumers', q['consumers']
-          report_metric_check_debug 'Queue' + q['vhost'] + q['name'] + '/Consumers/Active', 'consumers', q['active_consumers']
+          report_metric_check_debug mk_path('Queue', q['vhost'], q['name'], 'Messages', 'Ready'), 'message', q['messages_ready']
+          report_metric_check_debug mk_path('Queue', q['vhost'], q['name'], 'Memory'), 'bytes', q['memory']
+          report_metric_check_debug mk_path('Queue', q['vhost'], q['name'], 'Messages', 'Total'), 'message', q['messages']
+          report_metric_check_debug mk_path('Queue', q['vhost'], q['name'], 'Consumers', 'Total'), 'consumers', q['consumers']
+          report_metric_check_debug mk_path('Queue', q['vhost'], q['name'], 'Consumers', 'Active'), 'consumers', q['active_consumers']
         end
+      end
+
+      def mk_path(*args)
+        args.map { |a| URI.encode_www_form_component a }.join "/"
       end
     end
 
     NewRelic::Plugin::Setup.install_agent :rabbitmq, self
 
-    #
     # Launch the agent; this never returns.
-    #
-    if __FILE__==$0
-      NewRelic::Plugin::Run.setup_and_run
-    end
+    NewRelic::Plugin::Run.setup_and_run if __FILE__ == $PROGRAM_NAME
   end
 end
