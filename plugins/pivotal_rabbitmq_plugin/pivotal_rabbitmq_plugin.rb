@@ -47,6 +47,7 @@ module NewRelic
             puts "[RabbitMQ] Debug Mode On: Metric data will not be sent to new relic"
           end
 
+          @overview = rmq_manager.overview
           report_metric_check_debug 'Queued Messages/Ready', 'messages', queue_size_ready
           report_metric_check_debug 'Queued Messages/Unacknowledged', 'messages', queue_size_unacknowledged
 
@@ -56,11 +57,7 @@ module NewRelic
           report_metric_check_debug 'Message Rate/Publish', 'messages/sec', publish_rate
           report_metric_check_debug 'Message Rate/Return', 'messages/sec', return_unroutable_rate
 
-          report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info('fd_used')
-          report_metric_check_debug 'Node/Sockets', 'sockets', node_info('sockets_used')
-          report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info('proc_used')
-          report_metric_check_debug 'Node/Memory Used', 'bytes', node_info('mem_used')
-
+          report_node
           report_queues
 
         rescue Exception => e
@@ -91,7 +88,7 @@ module NewRelic
         totals_key = 'messages'
         totals_key << "_#{type}" if type
 
-        queue_totals = rmq_manager.overview['queue_totals']
+        queue_totals = @overview['queue_totals']
         if queue_totals.size == 0
           $stderr.puts "[RabbitMQ] No data found for queue_totals[#{totals_key}]. Check that queues are declared. No data will be reported."
         else
@@ -127,7 +124,7 @@ module NewRelic
       end
 
       def rate_for(type)
-        msg_stats = rmq_manager.overview['message_stats']
+        msg_stats = @overview['message_stats']
 
         if msg_stats.is_a?(Hash)
           details = msg_stats["#{type}_details"]
@@ -141,13 +138,13 @@ module NewRelic
         rate_for 'return_unroutable'
       end
 
-      #
-      # Node info
-      #
-      def node_info(key)
-        default_node_name = rmq_manager.overview['node']
-        node = rmq_manager.node(default_node_name)
-        node[key]
+      def report_node
+        default_node_name = @overview['node']
+        node_info = rmq_manager.node(default_node_name)
+        report_metric_check_debug 'Node/File Descriptors', 'file_descriptors', node_info['fd_used']
+        report_metric_check_debug 'Node/Sockets', 'sockets', node_info['sockets_used']
+        report_metric_check_debug 'Node/Erlang Processes', 'processes', node_info['proc_used']
+        report_metric_check_debug 'Node/Memory Used', 'bytes', node_info['mem_used']
       end
 
       def user_count
