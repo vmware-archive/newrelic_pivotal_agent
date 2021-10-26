@@ -32,9 +32,9 @@ agents:
     # Note: When monitoring multiple nodes you should use the real hostnames instead of localhost
     # Uncomment the appropriate line for your version
     # RabbitMQ Default URL version 3.0
-    #management_api_url: http://guest:guest@localhost:15672
+    #management_api_url: https://guest:guest@localhost:15672
     # RabbitMQ Default URL versions prior to 3.0
-    #management_api_url: http://guest:guest@localhost:55672
+    #management_api_url: https://guest:guest@localhost:55672
     #
     # Set "debug: true" to see additional debug output
     # Note: This logs the metrics locally and does not send data to new relic.
